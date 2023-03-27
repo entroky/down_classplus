@@ -1,5 +1,4 @@
 @echo off
-@echo off
 where ffmpeg >nul 2>&1
 if %errorlevel% == 0 (
     echo ffmpeg is already installed.
