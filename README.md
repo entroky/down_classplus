@@ -1,3 +1,4 @@
+AUTHOR: Mohamed Fardin Khan
 Download ClassPlus videos
 Extracts stream data and spits out a video.
 Required: 
