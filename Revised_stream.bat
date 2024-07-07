@@ -1,8 +1,8 @@
 @echo off
 setlocal enabledelayedexpansion
 
-:: Check if ffmpeg is installed
-ffmpeg -version > nul 2>&1
+:: Check if youtube-dl is installed
+youtube-dl --version > nul 2>&1
 if %errorlevel% neq 0 (
     :: Check if choco is installed
     choco -v > nul 2>&1
@@ -11,9 +11,9 @@ if %errorlevel% neq 0 (
         echo Installing Chocolatey...
         @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
     )
-    :: Install ffmpeg using choco
-    echo Installing ffmpeg...
-    choco install ffmpeg -y > nul
+    :: Install youtube-dl using choco
+    echo Installing youtube-dl...
+    choco install youtube-dl -y > nul
 )
 
 :: Prompt the user for the output directory using a popup dialog box
@@ -43,7 +43,7 @@ if "%url%"=="" (
 )
 
 :: Basic URL validation (optional)
-echo %url% | findstr /i "http://" >nul
+echo %url% | findstr /i "http://" "https://" >nul
 if %errorlevel% neq 0 (
     echo Invalid URL. Please enter a valid URL.
     goto loop
@@ -69,7 +69,8 @@ if exist "%output_file%" (
     goto unique_check
 )
 
-ffmpeg -loglevel error -i "%url%" -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 "%output_file%"
+:: Download video using youtube-dl
+youtube-dl -o "%output_file%" "%url%"
 
 echo Video extraction complete. Output file: %output_file%
 
