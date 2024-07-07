@@ -70,7 +70,7 @@ if exist "%output_file%" (
 )
 
 :: Download video using youtube-dl
-youtube-dl -o "%output_file%" "%url%"
+youtube-dl -f best -o "%output_file%" "%url%"
 
 echo Video extraction complete. Output file: %output_file%
 
